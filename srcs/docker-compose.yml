@@ -1,0 +1,70 @@
+services:
+  # Nginx
+  nginx:
+    build: requirements/nginx/
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 443:443
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+        # Mount wordpress_data volume to /var/www/html inside the container
+    volumes:
+      - wordpress:/var/www/html/wordpress
+
+  # Mariadb
+  mariadb:
+    build: requirements/mariadb/
+    image: mariadb
+    container_name: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - inception
+    env_file: ".env"
+
+  # WordPress
+  wordpress:
+    build:  requirements/wordpress/
+    image: wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+      #mariadb:
+      #  condition: service_healthy
+    restart: always
+    env_file: .env
+    networks:
+      - inception
+    ports:
+      - 9000
+    volumes:
+      - wordpress:/var/www/html/wordpress
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/fbonaert/Desktop/programmation/Ecole/test/mariadb
+        #device: /home/febonaer/data/mariadb
+        #name: mariadb
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/fbonaert/Desktop/programmation/Ecole/test/wordpress
+        #device: /home/febonaer/data/wordpress
+        #name: wordpress
