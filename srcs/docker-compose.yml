@@ -14,6 +14,7 @@ services:
         # Mount wordpress_data volume to /var/www/html inside the container
     volumes:
       - wordpress:/var/www/html/wordpress
+      - /home/febonaer/data/nginx:/etc/nginx/ssl
 
   # Mariadb
   mariadb:
