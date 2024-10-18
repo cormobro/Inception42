@@ -24,7 +24,7 @@ services:
       - 3306:3306
     networks:
       - inception
-    env_file: .env
+    env_file: ".env"
 
   wordpress:
     build:  requirements/wordpress/
@@ -37,7 +37,7 @@ services:
     networks:
       - inception
     ports:
-      - 9000
+      - 9000:9000
     volumes:
       - wordpress:/var/www/html/wordpress
 
@@ -51,12 +51,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-        #device: /Users/fbonaert/Desktop/programmation/Ecole/test/mariadb
       device: /home/febonaer/data/mariadb
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-        #device: /Users/fbonaert/Desktop/programmation/Ecole/test/wordpress
       device: /home/febonaer/data/wordpress
