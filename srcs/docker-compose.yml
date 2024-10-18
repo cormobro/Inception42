@@ -1,5 +1,4 @@
 services:
-  # Nginx
   nginx:
     build: requirements/nginx/
     image: nginx
@@ -11,12 +10,9 @@ services:
       - inception
     depends_on:
       - wordpress
-        # Mount wordpress_data volume to /var/www/html inside the container
     volumes:
       - wordpress:/var/www/html/wordpress
-      - /home/febonaer/data/nginx:/etc/nginx/ssl
 
-  # Mariadb
   mariadb:
     build: requirements/mariadb/
     image: mariadb
@@ -28,17 +24,14 @@ services:
       - 3306:3306
     networks:
       - inception
-    env_file: ".env"
+    env_file: .env
 
-  # WordPress
   wordpress:
     build:  requirements/wordpress/
     image: wordpress
     container_name: wordpress
     depends_on:
       - mariadb
-      #mariadb:
-      #  condition: service_healthy
     restart: always
     env_file: .env
     networks:
@@ -60,7 +53,6 @@ volumes:
       o: bind
         #device: /Users/fbonaert/Desktop/programmation/Ecole/test/mariadb
       device: /home/febonaer/data/mariadb
-        #name: mariadb
   wordpress:
     driver: local
     driver_opts:
@@ -68,4 +60,3 @@ volumes:
       o: bind
         #device: /Users/fbonaert/Desktop/programmation/Ecole/test/wordpress
       device: /home/febonaer/data/wordpress
-        #name: wordpress
