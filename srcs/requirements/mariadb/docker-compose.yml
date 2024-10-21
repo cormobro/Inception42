@@ -1,0 +1,26 @@
+services:
+
+  mariadb:
+    build:
+      context: .
+      args:
+        - SQL_ROOT_PASSWORD
+        - SQL_DATABASE
+        - SQL_USER
+        - SQL_PASSWORD
+    image: mariadb
+    container_name: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    env_file: .env
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/fbonaert/Desktop/programmation/Ecole/test/mariadb

@@ -13,3 +13,4 @@ RUN chmod 777 -R /usr/local/bin/mariadb.sh
 EXPOSE 3306
 
 ENTRYPOINT ["./usr/local/bin/mariadb.sh"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
