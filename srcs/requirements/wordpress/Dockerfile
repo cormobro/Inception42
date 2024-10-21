@@ -18,9 +18,9 @@ RUN apt-get install mariadb-server -y
 RUN apt-get install sendmail -y
 
 #wordpress
-RUN wget https://wordpress.org/latest.tar.gz -P /var/www/html
-RUN cd /var/www/html && tar -xzvf latest.tar.gz && rm latest.tar.gz
-RUN chown -R root:root /var/www/html/wordpress/
+#RUN wget https://wordpress.org/latest.tar.gz -P /var/www/html
+#RUN cd /var/www/html && tar -xzvf latest.tar.gz && rm latest.tar.gz
+RUN mkdir /var/www/html/wordpress/ && chown -R root:root /var/www/html/wordpress/
 #wp-cli (wordpress terminal)
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
