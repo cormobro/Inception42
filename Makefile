@@ -15,7 +15,7 @@ fclean:
 	sudo rm -rf /home/febonaer/data/wordpress
 
 prune:
-	@docker system prune
+	@docker system prune -a --volumes
 
 srcs/.env:
 	@echo "Missing .env file" && exit 1

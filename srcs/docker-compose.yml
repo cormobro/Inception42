@@ -1,34 +1,39 @@
 services:
   nginx:
     build: requirements/nginx/
-    image: nginx
     container_name: nginx
+    depends_on:
+      - wordpress
     restart: always
     ports:
       - 443:443
     networks:
       - inception
-    depends_on:
-      - wordpress
     volumes:
       - wordpress:/var/www/html/wordpress
 
   mariadb:
-    build: requirements/mariadb/
-    image: mariadb
+    build:
+      context: requirements/mariadb
+      args:
+        - SQL_DATABASE
+        - SQL_ROOT
+        - SQL_ROOT_PASSWORD
+        - SQL_USER
+        - SQL_PASSWORD
+      dockerfile: Dockerfile
     container_name: mariadb
     volumes:
       - mariadb:/var/lib/mysql
     restart: always
-    ports:
-      - 3306:3306
+      #ports:
+      #- 3306:3306
     networks:
       - inception
     env_file: ".env"
 
   wordpress:
     build:  requirements/wordpress/
-    image: wordpress
     container_name: wordpress
     depends_on:
       - mariadb
@@ -36,8 +41,8 @@ services:
     env_file: .env
     networks:
       - inception
-    ports:
-      - 9000:9000
+        #ports:
+        #- 9000:9000
     volumes:
       - wordpress:/var/www/html/wordpress
 
